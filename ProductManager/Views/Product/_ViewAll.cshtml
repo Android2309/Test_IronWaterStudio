@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ProductManager.Models.Entities.Product>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ИД
+            </th>
+            <th>
+                Название
+            </th>
+            <th>
+                Цена
+            </th>
+            <th style="width:150px">
+                <a onclick="showInModal('@Url.Action("AddOrEdit","Product",null, Context.Request.Scheme)','Добавить')" class="btn btn-success" style="width: 100%">
+                    Добавить
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td class="d-flex">
+                    <a onclick="showInModal('@Url.Action("AddOrEdit","Product",new { id = item.Id }, Context.Request.Scheme)','Изменить')" class="btn btn-primary mx-1">
+                        Изменить
+                    </a>
+                    <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return jQueryAjaxDelete(this);">
+                        <input type="submit" value="Удалить" class="btn btn-danger" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
